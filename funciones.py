@@ -29,6 +29,14 @@ def obtenerFormula(formula,variables,guardarFormula, guardarVariables):
   #  Mientras que la de funciones numéricas las usaremos para meterle los valores que nos de el usuario
 
     print(listaDerivadas)
+
+def suma_cuadratura(*sumandos):
+    suma = None
+    for i in sumandos:
+        suma = i^2
+    
+    resultado = np.sqrt(suma)
+    return resultado
 #############################################################
 
 

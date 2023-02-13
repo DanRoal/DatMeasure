@@ -23,5 +23,25 @@ Las funciones que planeo agregar son:
 ¿Cómo es que voy a calcular las incertidumbres? La respuesta es simple, usando ésta fórmula:
 
 $$
-\Delta f(x_0) = 3
+\Delta f(x_0, x_1, ...) = \Delta f(x_0,x_1,x_2,...) =  \sqrt{(\sigma_{nom})^2 + (\sigma_{est})^2}
 $$
+
+Donde $\sigma_{nom}$ representa la incertidumbre nominal de nuestra medición indirecta y donde $\sigma_{est}$ representa la incertidumbre estadística asociada a la función $f$.
+
+La incertidumbre nominal y estadísiticas estarán calculadas de la siguiente manera:
+
+$$
+\sigma_{nom} = \sqrt{\sum_{i=0}^N (\frac{\partial f}{\partial x_i})^2 \sigma_{ap}^2}
+$$
+
+$$
+\sigma_{est} = \sqrt{\sum_{i=0}^N (\frac{\partial f}{\partial x_i})^2 S_{x_i}^2}
+$$
+
+En donde $\sigma_{ap}$ representa la incertidumbre de apreciación, i.e. La incertidumbre debida a la resolución de nuestro instrumento de medición. $S_{x_i}$ Representa la desviación estandar asociada a cada una de las muestras tomadas de la variable $x_i$ Asumiendo una distribución normal.
+
+Cabe aclarar que estamos tomando muchas restricciones, dado que estamos asumiendo que la parte no lineal de la función $f$ es no-significativa, y que úede ser despresiada en una expansión en serie de Taylor. Sin embargo debido a que este proyecto está pensado en ser usado en un laboratorio de enseñanza, La mayoría de funciones tratadas serán no tan no-lineales, o bueno eso espero.
+
+Espero poder actualizar y agrgar más funciones en el futuro, por lo que la opción de calcular incertidumbres de funciones completamente no lineales eventualmente será agregada.
+
+También cabe añadir que estamos reduciendo la incertidumbre absoluta dada por $\Delta f$ a la incertidumbre nominal y estadística, y aunque estricatmente esto es solo una parte de la misma, para propocitos de enseñanza es más que suficiente.

@@ -44,4 +44,10 @@ def suma_cuadratura(*sumandos):
 #def confirmacion():
 #    
 #    obtenerFormula(formula, variables, guardarFormula, guardarVariables)
-#############################################################
+
+def datos_variables():
+    ventana_nueva1 = tk.Toplevel()
+    ventana_nueva1.title("Introduce tus valores medidos")
+    entrada_datos = tk.Entry(ventana_nueva1)
+    entrada_datos.grid(row=2)
+###########################################################

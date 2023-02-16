@@ -7,6 +7,8 @@ import tkinter as tk
 ################ Funciones matemáticas ######################
 listaDerivadas = []
 listaDerivadasNumerica = []
+listaDatosExperimentales = []
+contador_ventanas = 0
 def derivacionFormula(polinomio, variables):
     
     listaDerivadas.clear()
@@ -18,11 +20,14 @@ def derivacionFormula(polinomio, variables):
         listaDerivadas.append(derivada)
         listaDerivadasNumerica.append(numericDeriv)
 
-def obtenerFormula(formula,variables,guardarFormula, guardarVariables):
-    guardarFormula = formula.get()
-    guardarVariables = variables.get()
+def obtenerFormula(formula,variables):
+    global guardarFormula 
+    guardarFormula = formula
+    global Variables 
+    Variables = variables.split()
 
-    derivacionFormula(guardarFormula, guardarVariables.split())
+    derivacionFormula(guardarFormula, Variables)
+    nuevasVentanasDatos()
 
  #   La derivación ya está guardada en dos listas, una como expresión algebraica y otra como función numérica
   #  La lista que contiene las expresiones algebraicas la usaremos después para mostrala al usuario en formato LaTex
@@ -30,9 +35,9 @@ def obtenerFormula(formula,variables,guardarFormula, guardarVariables):
 
     print(listaDerivadas)
 
-def suma_cuadratura(*sumandos):
+def suma_cuadratura(Lista_de_sumandos):
     suma = None
-    for i in sumandos:
+    for i in Lista_de_sumandos:
         suma = i^2
     
     resultado = np.sqrt(suma)
@@ -45,9 +50,21 @@ def suma_cuadratura(*sumandos):
 #    
 #    obtenerFormula(formula, variables, guardarFormula, guardarVariables)
 
-def datos_variables():
+def nuevasVentanasDatos():
+    contador_ventanas += 1
+
     ventana_nueva1 = tk.Toplevel()
     ventana_nueva1.title("Introduce tus valores medidos")
     entrada_datos = tk.Entry(ventana_nueva1)
     entrada_datos.grid(row=2)
+
+    boton_nueva_ventana = tk.Button(text="Siguiente variable", command= nuevasVentanasDatos)
+    boton_nueva_ventana.grid(row=3)
+    boton_cancelar = tk.Button(text="Cancelar", command= ventana_nueva1.destroy)
+    boton_cancelar.grid(row=4)
+
+    if contador_ventanas > len(Variables):
+        ventana_nueva1.destroy()
+    listaDatosExperimentales.append(entrada_datos.get().split())
+
 ###########################################################

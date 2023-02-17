@@ -51,6 +51,7 @@ def suma_cuadratura(Lista_de_sumandos):
 #    obtenerFormula(formula, variables, guardarFormula, guardarVariables)
 
 def nuevasVentanasDatos():
+    global contador_ventanas 
     contador_ventanas += 1
 
     ventana_nueva1 = tk.Toplevel()
@@ -58,9 +59,9 @@ def nuevasVentanasDatos():
     entrada_datos = tk.Entry(ventana_nueva1)
     entrada_datos.grid(row=2)
 
-    boton_nueva_ventana = tk.Button(text="Siguiente variable", command= nuevasVentanasDatos)
+    boton_nueva_ventana = tk.Button(ventana_nueva1, ext="Siguiente variable", command= nuevasVentanasDatos)
     boton_nueva_ventana.grid(row=3)
-    boton_cancelar = tk.Button(text="Cancelar", command= ventana_nueva1.destroy)
+    boton_cancelar = tk.Button(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
     boton_cancelar.grid(row=4)
 
     if contador_ventanas > len(Variables):

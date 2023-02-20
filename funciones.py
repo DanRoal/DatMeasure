@@ -1,6 +1,7 @@
 import sympy as sp
 import numpy as np
 import tkinter as tk
+import math
 
 # Definimos funciones con las que vamos a trabajar
 
@@ -40,8 +41,33 @@ def suma_cuadratura(Lista_de_sumandos):
     for i in Lista_de_sumandos:
         suma = i^2
     
-    resultado = np.sqrt(suma)
+    resultado = math.sqrt(suma)
     return resultado
+
+def incertidumbre_absoluta():
+    promedios = []
+    for i in listaDatosExperimentales:
+        promedios[i] = funcion_promedios(listaDatosExperimentales[i])
+
+    incertidumbre_estadistica(promedios)
+
+def funcion_promedios(datos):
+    suma_datos = 0
+    for i in datos:
+        suma_datos += i
+    return suma_datos/len(datos)
+
+def incertidumbre_estadistica(lista_promedios):
+    sumandos = []
+    arr_varianza = np.var(listaDatosExperimentales, axis=1)
+    lista_varianza = arr_varianza.tolist()
+    for i in listaDerivadasNumerica:
+        multiplicados = (abs(listaDerivadasNumerica[i](lista_promedios[i])))**2 * lista_varianza[i]
+        sumandos.append(multiplicados)
+
+    return suma_cuadratura(sumandos)
+
+
 #############################################################
 
 
@@ -54,18 +80,29 @@ def nuevasVentanasDatos():
     global contador_ventanas 
     contador_ventanas += 1
 
+
     ventana_nueva1 = tk.Toplevel()
     ventana_nueva1.title("Introduce tus valores medidos")
+    ventana_nueva1.geometry("500x300")
     entrada_datos = tk.Entry(ventana_nueva1)
     entrada_datos.grid(row=2)
 
-    boton_nueva_ventana = tk.Button(ventana_nueva1, ext="Siguiente variable", command= nuevasVentanasDatos)
+    if contador_ventanas > len(Variables):
+        obtenerDatos(entrada_datos.get(), ventana_nueva1)
+    
+    boton_nueva_ventana = tk.Button(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1))
     boton_nueva_ventana.grid(row=3)
     boton_cancelar = tk.Button(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
     boton_cancelar.grid(row=4)
 
+def obtenerDatos(entrada, ventana):
+        
     if contador_ventanas > len(Variables):
-        ventana_nueva1.destroy()
-    listaDatosExperimentales.append(entrada_datos.get().split())
+        ventana.destroy()
+        incertidumbre_absoluta()
+    else:
+        listaDatosExperimentales.append(entrada.split())
+        ventana.destroy()
+        nuevasVentanasDatos()
 
 ###########################################################

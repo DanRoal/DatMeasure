@@ -17,8 +17,10 @@ formula = tkinter.Entry()       # Le pedimos al usuario la formula a derivar
 formula.place(x=150, y=100)
 variables = tkinter.Entry()     # Le pedimos las variales respecto a las cules derivar
 variables.place(x=150, y=120)
+delta_x = tkinter.Entry()
+delta_x.place(x=300, y=120)
 
-button = tkinter.Button(text="Derivar", command=lambda: fun.obtenerFormula(formula.get(), variables.get()))       # Hacemos un boton con el cual ejecutar las acciones que queramos
+button = tkinter.Button(text="Derivar", command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= delta_x.get()))       # Hacemos un boton con el cual ejecutar las acciones que queramos
 button.place(x=50, y=100)
  
 

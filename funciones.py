@@ -2,6 +2,7 @@ import sympy as sp
 import numpy as np
 import tkinter as tk
 import math
+from tkinter import messagebox
 
 # Definimos funciones con las que vamos a trabajar
 
@@ -10,6 +11,8 @@ listaDerivadas = []
 listaDerivadasNumerica = []
 listaDatosExperimentales = []
 contador_ventanas = 0
+lista_apariencia= []
+promedios = []
 def derivacionFormula(polinomio, variables):
     
     listaDerivadas.clear()
@@ -21,11 +24,12 @@ def derivacionFormula(polinomio, variables):
         listaDerivadas.append(derivada)
         listaDerivadasNumerica.append(numericDeriv)
 
-def obtenerFormula(formula,variables):
+def obtenerFormula(formula,variables, deltas):
     global guardarFormula 
     guardarFormula = formula
     global Variables 
     Variables = variables.split()
+    lista_apariencia = deltas.split()
 
     derivacionFormula(guardarFormula, Variables)
     nuevasVentanasDatos()
@@ -45,11 +49,13 @@ def suma_cuadratura(Lista_de_sumandos):
     return resultado
 
 def incertidumbre_absoluta():
-    promedios = []
-    for i in listaDatosExperimentales:
-        promedios[i] = funcion_promedios(listaDatosExperimentales[i])
 
-    incertidumbre_estadistica(promedios)
+    print(listaDatosExperimentales[0])
+
+    for i in listaDatosExperimentales:
+        promedios.append(funcion_promedios(listaDatosExperimentales[i]))
+
+    return math.sqrt(incertidumbre_estadistica(promedios)**2+incertidumbre_nominal(promedios)**2)
 
 def funcion_promedios(datos):
     suma_datos = 0
@@ -67,6 +73,13 @@ def incertidumbre_estadistica(lista_promedios):
 
     return suma_cuadratura(sumandos)
 
+def incertidumbre_nominal(lista_promedios):
+    sumandos = []
+    for i in listaDerivadasNumerica:
+        multiplicados = (abs(listaDerivadasNumerica[i](lista_promedios[i])))**2 * (lista_apariencia[i])**2
+        sumandos.append(multiplicados)
+
+    return suma_cuadratura(sumandos)
 
 #############################################################
 
@@ -99,7 +112,7 @@ def obtenerDatos(entrada, ventana):
         
     if contador_ventanas > len(Variables):
         ventana.destroy()
-        incertidumbre_absoluta()
+        print([incertidumbre_absoluta(), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
     else:
         listaDatosExperimentales.append(entrada.split())
         ventana.destroy()

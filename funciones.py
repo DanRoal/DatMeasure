@@ -11,7 +11,6 @@ listaDerivadas = []
 listaDerivadasNumerica = []
 listaDatosExperimentales = []
 contador_ventanas = 0
-lista_apariencia= []
 promedios = []
 def derivacionFormula(polinomio, variables):
     
@@ -29,6 +28,7 @@ def obtenerFormula(formula,variables, deltas):
     guardarFormula = formula
     global Variables 
     Variables = variables.split()
+    global lista_apariencia
     lista_apariencia = deltas.split()
 
     derivacionFormula(guardarFormula, Variables)
@@ -43,17 +43,17 @@ def obtenerFormula(formula,variables, deltas):
 def suma_cuadratura(Lista_de_sumandos):
     suma = None
     for i in Lista_de_sumandos:
-        suma = i^2
+        suma = i**2
     
     resultado = math.sqrt(suma)
     return resultado
 
 def incertidumbre_absoluta():
 
-    print(listaDatosExperimentales[0])
+    print(list(np.float_(listaDatosExperimentales)))
 
-    for i in listaDatosExperimentales:
-        promedios.append(funcion_promedios(listaDatosExperimentales[i]))
+    for i in range(0,len(listaDatosExperimentales)):
+        promedios.append(funcion_promedios(list(np.float_(listaDatosExperimentales[i]) )))
 
     return math.sqrt(incertidumbre_estadistica(promedios)**2+incertidumbre_nominal(promedios)**2)
 
@@ -65,9 +65,9 @@ def funcion_promedios(datos):
 
 def incertidumbre_estadistica(lista_promedios):
     sumandos = []
-    arr_varianza = np.var(listaDatosExperimentales, axis=1)
-    lista_varianza = arr_varianza.tolist()
-    for i in listaDerivadasNumerica:
+    arr_varianza = np.var(np.float_(listaDatosExperimentales), axis=1)
+    lista_varianza = list(arr_varianza)
+    for i in range(0,len(listaDerivadasNumerica)):
         multiplicados = (abs(listaDerivadasNumerica[i](lista_promedios[i])))**2 * lista_varianza[i]
         sumandos.append(multiplicados)
 
@@ -75,8 +75,10 @@ def incertidumbre_estadistica(lista_promedios):
 
 def incertidumbre_nominal(lista_promedios):
     sumandos = []
-    for i in listaDerivadasNumerica:
-        multiplicados = (abs(listaDerivadasNumerica[i](lista_promedios[i])))**2 * (lista_apariencia[i])**2
+    print(listaDerivadasNumerica)
+    print(lista_apariencia)
+    for i in range(0,len(listaDerivadasNumerica)):
+        multiplicados = (abs(listaDerivadasNumerica[i](lista_promedios[i])))**2 * (list(float(lista_apariencia[i]) ))**2
         sumandos.append(multiplicados)
 
     return suma_cuadratura(sumandos)

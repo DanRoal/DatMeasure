@@ -19,7 +19,7 @@ def derivacionFormula(polinomio, variables):
 
     for var in variables:
         derivada = sp.diff(polinomio, var)
-        numericDeriv = sp.lambdify(var, derivada)
+        numericDeriv = sp.lambdify(variables, derivada)
         listaDerivadas.append(derivada)
         listaDerivadasNumerica.append(numericDeriv)
 
@@ -50,12 +50,10 @@ def suma_cuadratura(Lista_de_sumandos):
 
 def incertidumbre_absoluta():
 
-    print(list(np.float_(listaDatosExperimentales)))
-
     for i in range(0,len(listaDatosExperimentales)):
         promedios.append(funcion_promedios(list(np.float_(listaDatosExperimentales[i]) )))
 
-    return math.sqrt(incertidumbre_estadistica(promedios)**2+incertidumbre_nominal(promedios)**2)
+    return math.sqrt(incertidumbre_estadistica()**2+incertidumbre_nominal()**2)
 
 def funcion_promedios(datos):
     suma_datos = 0
@@ -63,22 +61,21 @@ def funcion_promedios(datos):
         suma_datos += i
     return suma_datos/len(datos)
 
-def incertidumbre_estadistica(lista_promedios):
+def incertidumbre_estadistica():
     sumandos = []
     arr_varianza = np.var(np.float_(listaDatosExperimentales), axis=1)
     lista_varianza = list(arr_varianza)
+
     for i in range(0,len(listaDerivadasNumerica)):
-        multiplicados = (abs(listaDerivadasNumerica[i](lista_promedios[i])))**2 * lista_varianza[i]
+        multiplicados = (abs(listaDerivadasNumerica[i](*promedios)))**2 * lista_varianza[i]
         sumandos.append(multiplicados)
 
     return suma_cuadratura(sumandos)
 
-def incertidumbre_nominal(lista_promedios):
+def incertidumbre_nominal():
     sumandos = []
-    print(listaDerivadasNumerica)
-    print(lista_apariencia)
-    for i in range(0,len(listaDerivadasNumerica)):
-        multiplicados = (abs(listaDerivadasNumerica[i](lista_promedios[i])))**2 * (list(float(lista_apariencia[i]) ))**2
+    for i in range(len(lista_apariencia)):
+        multiplicados = (abs(listaDerivadasNumerica[i](*promedios)))**2 * (float(lista_apariencia[i]) )**2
         sumandos.append(multiplicados)
 
     return suma_cuadratura(sumandos)
@@ -87,9 +84,6 @@ def incertidumbre_nominal(lista_promedios):
 
 
 ##################### Funciones de interfaz##################
-#def confirmacion():
-#    
-#    obtenerFormula(formula, variables, guardarFormula, guardarVariables)
 
 def nuevasVentanasDatos():
     global contador_ventanas 
@@ -114,7 +108,8 @@ def obtenerDatos(entrada, ventana):
         
     if contador_ventanas > len(Variables):
         ventana.destroy()
-        print([incertidumbre_absoluta(), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
+        print([incertidumbre_absoluta(), incertidumbre_estadistica(), incertidumbre_nominal()])
+        
     else:
         listaDatosExperimentales.append(entrada.split())
         ventana.destroy()

@@ -41,16 +41,15 @@ def obtenerFormula(formula,variables, deltas):
     print(listaDerivadas)
 
 def suma_cuadratura(Lista_de_sumandos):
-    suma = None
+    suma = 0
     for i in Lista_de_sumandos:
-        suma = i**2
-    
+        suma = suma + i**2
     resultado = math.sqrt(suma)
     return resultado
 
 def incertidumbre_absoluta():
 
-    for i in range(0,len(listaDatosExperimentales)):
+    for i in range(len(listaDatosExperimentales)):
         promedios.append(funcion_promedios(list(np.float_(listaDatosExperimentales[i]) )))
 
     return math.sqrt(incertidumbre_estadistica()**2+incertidumbre_nominal()**2)
@@ -63,11 +62,11 @@ def funcion_promedios(datos):
 
 def incertidumbre_estadistica():
     sumandos = []
-    arr_varianza = np.var(np.float_(listaDatosExperimentales), axis=1)
-    lista_varianza = list(arr_varianza)
+    arr_standar = np.std(np.float_(listaDatosExperimentales), axis=1)
+    lista_standar = list(arr_standar)
 
     for i in range(0,len(listaDerivadasNumerica)):
-        multiplicados = (abs(listaDerivadasNumerica[i](*promedios)))**2 * lista_varianza[i]
+        multiplicados = (abs(listaDerivadasNumerica[i](*promedios))) * lista_standar[i]
         sumandos.append(multiplicados)
 
     return suma_cuadratura(sumandos)
@@ -75,7 +74,9 @@ def incertidumbre_estadistica():
 def incertidumbre_nominal():
     sumandos = []
     for i in range(len(lista_apariencia)):
-        multiplicados = (abs(listaDerivadasNumerica[i](*promedios)))**2 * (float(lista_apariencia[i]) )**2
+        df = abs(listaDerivadasNumerica[i](*promedios))
+        ap = np.float_(lista_apariencia[i])
+        multiplicados = (df) * (ap)
         sumandos.append(multiplicados)
 
     return suma_cuadratura(sumandos)

@@ -20,9 +20,11 @@ variables.place(x=150, y=120)
 delta_x = tkinter.Entry()
 delta_x.place(x=300, y=120)
 
-button = tkinter.Button(text="Derivar", command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= delta_x.get()))       # Hacemos un boton con el cual ejecutar las acciones que queramos
-button.place(x=50, y=100)
- 
+desviacionDatos = tkinter.Button(text="Desviacion entre datos", command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= delta_x.get()))       # Hacemos un boton con el cual ejecutar las acciones que queramos
+desviacionResultados = tkinter.Button(text= "Desviacion entre resultados")
 
+
+desviacionDatos.place(x=50, y=100) 
+desviacionResultados.place(x=50,y=120)
 
 root.mainloop()                 # Corremos la aplicación

@@ -12,6 +12,7 @@ listaDerivadasNumerica = []
 listaDatosExperimentales = []
 contador_ventanas = 0
 promedios = []
+Formula = sp.lambdify(Variables, guardarFormula)
 def derivacionFormula(polinomio, variables):
     
     listaDerivadas.clear()
@@ -47,12 +48,12 @@ def suma_cuadratura(Lista_de_sumandos):
     resultado = math.sqrt(suma)
     return resultado
 
-def incertidumbre_absoluta():
+def incertidumbre_absoluta(lista_prom):
 
     for i in range(len(listaDatosExperimentales)):
         promedios.append(funcion_promedios(list(np.float_(listaDatosExperimentales[i]) )))
 
-    return math.sqrt(incertidumbre_estadistica()**2+incertidumbre_nominal()**2)
+    return math.sqrt(incertidumbre_estadistica(lista_prom)**2+incertidumbre_nominal(lista_prom)**2)
 
 def funcion_promedios(datos):
     suma_datos = 0
@@ -60,21 +61,27 @@ def funcion_promedios(datos):
         suma_datos += i
     return suma_datos/len(datos)
 
-def incertidumbre_estadistica():
+def incertidumbre_f():
+    evaluaciones_f = []
+    
+    
+    
+
+def incertidumbre_estadistica(lista):
     sumandos = []
-    arr_standar = np.std(np.float_(listaDatosExperimentales), axis=1)
+    arr_standar = np.std(np.float_(listaDatosExperimentales), axis=1, ddof=1)
     lista_standar = list(arr_standar)
 
-    for i in range(0,len(listaDerivadasNumerica)):
-        multiplicados = (abs(listaDerivadasNumerica[i](*promedios))) * lista_standar[i]
+    for i in range(len(listaDerivadasNumerica)):
+        multiplicados = (abs(listaDerivadasNumerica[i](*lista))) * lista_standar[i]
         sumandos.append(multiplicados)
 
     return suma_cuadratura(sumandos)
 
-def incertidumbre_nominal():
+def incertidumbre_nominal(lista):
     sumandos = []
     for i in range(len(lista_apariencia)):
-        df = abs(listaDerivadasNumerica[i](*promedios))
+        df = abs(listaDerivadasNumerica[i](*lista))
         ap = np.float_(lista_apariencia[i])
         multiplicados = (df) * (ap)
         sumandos.append(multiplicados)
@@ -109,7 +116,7 @@ def obtenerDatos(entrada, ventana):
         
     if contador_ventanas > len(Variables):
         ventana.destroy()
-        print([incertidumbre_absoluta(), incertidumbre_estadistica(), incertidumbre_nominal()])
+        print([incertidumbre_absoluta(promedios), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
         
     else:
         listaDatosExperimentales.append(entrada.split())

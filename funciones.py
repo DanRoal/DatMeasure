@@ -13,6 +13,7 @@ listaDatosExperimentales = []
 contador_ventanas = 0
 promedios = []
 Formula = sp.lambdify(Variables, guardarFormula)
+
 def derivacionFormula(polinomio, variables):
     
     listaDerivadas.clear()
@@ -24,7 +25,7 @@ def derivacionFormula(polinomio, variables):
         listaDerivadas.append(derivada)
         listaDerivadasNumerica.append(numericDeriv)
 
-def obtenerFormula(formula,variables, deltas):
+def obtenerFormula(formula,variables, deltas, trigger = bool):
     global guardarFormula 
     guardarFormula = formula
     global Variables 
@@ -33,7 +34,7 @@ def obtenerFormula(formula,variables, deltas):
     lista_apariencia = deltas.split()
 
     derivacionFormula(guardarFormula, Variables)
-    nuevasVentanasDatos()
+    nuevasVentanasDatos(trigger)
 
  #   La derivación ya está guardada en dos listas, una como expresión algebraica y otra como función numérica
   #  La lista que contiene las expresiones algebraicas la usaremos después para mostrala al usuario en formato LaTex
@@ -93,7 +94,7 @@ def incertidumbre_nominal(lista):
 
 ##################### Funciones de interfaz##################
 
-def nuevasVentanasDatos():
+def nuevasVentanasDatos(trigg):
     global contador_ventanas 
     contador_ventanas += 1
 
@@ -105,16 +106,17 @@ def nuevasVentanasDatos():
     entrada_datos.grid(row=2)
 
     if contador_ventanas > len(Variables):
-        obtenerDatos(entrada_datos.get(), ventana_nueva1)
+        obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg)
     
     boton_nueva_ventana = tk.Button(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1))
     boton_nueva_ventana.grid(row=3)
     boton_cancelar = tk.Button(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
     boton_cancelar.grid(row=4)
 
-def obtenerDatos(entrada, ventana):
+def obtenerDatos(entrada, ventana, encendido):
+    
         
-    if contador_ventanas > len(Variables):
+    if contador_ventanas > len(Variables) & encendido==True:
         ventana.destroy()
         print([incertidumbre_absoluta(promedios), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
         

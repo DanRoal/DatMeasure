@@ -17,7 +17,7 @@ formula = tkinter.Entry()       # Le pedimos al usuario la formula a derivar
 formula.place(x=150, y=100)
 variables = tkinter.Entry()     # Le pedimos las variales respecto a las cules derivar
 variables.place(x=150, y=120)
-delta_x = tkinter.Entry()
+delta_x = tkinter.Entry()       #Le pedimos que ingrese la inertidumbre absoluta o aparente de las variables
 delta_x.place(x=300, y=120)
 
 desviacionDatos = tkinter.Button(text="Desviacion entre datos", command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= delta_x.get()))       # Hacemos un boton con el cual ejecutar las acciones que queramos

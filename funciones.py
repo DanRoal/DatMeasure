@@ -91,6 +91,42 @@ def incertidumbre_nominal(lista):
 
 #############################################################
 
+###################### Clases ###############################
+'''
+import tkinter as tk
+
+class SecondaryWindow:
+
+    alive = False
+
+    def __init__(self, master, name):
+        self.master = master
+        self.master.title("Ingresa los datos de la variable {name}")
+        self.label = tk.Label(self.master, text=f"oli caracoli")
+        self.label.pack()
+        if (contador_ventanas == len(Variables)):
+            self.button_close = ttk.Button(
+                self,
+                text="Terminar",
+                command=self.destroy
+            )
+        else:
+            self.button_close = ttk.Button(
+                self,
+                text="Siguiente variable",
+                command=self.destroy
+            )
+
+    # Create a list of window names
+    window_names = ["Window 1", "Window 2", "Window 3", "Window 4", "Window 5"]
+
+    # Create secondary windows with different names using a for loop
+    for name in window_names:
+        new_window = tk.Toplevel(root)
+        SecondaryWindow(new_window, name)
+'''
+#############################################################
+
 
 ##################### Funciones de interfaz##################
 

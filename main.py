@@ -15,7 +15,7 @@ root.geometry("500x300")        # Tamaño de la ventana
 
 formula = tkinter.Entry()       # Le pedimos al usuario la formula a derivar
 formula.place(x=150, y=100)
-variables = tkinter.Entry()     # Le pedimos las variales respecto a las cules derivar
+variables = tkinter.Entry()     # Le pedimos las variales respecto a las cuales derivar
 variables.place(x=150, y=120)
 delta_x = tkinter.Entry()       #Le pedimos que ingrese la inertidumbre absoluta o aparente de las variables
 delta_x.place(x=300, y=120)
@@ -24,7 +24,7 @@ desviacionDatos = tkinter.Button(text="Desviacion entre datos", command=lambda: 
 desviacionResultados = tkinter.Button(text= "Desviacion entre resultados")
 
 
-desviacionDatos.place(x=50, y=100) 
-desviacionResultados.place(x=50,y=120)
+desviacionDatos.place(x=10, y=100) 
+desviacionResultados.place(x=10,y=120)
 
 root.mainloop()                 # Corremos la aplicación

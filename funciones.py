@@ -12,7 +12,7 @@ listaDerivadasNumerica = []
 listaDatosExperimentales = []
 contador_ventanas = 0
 promedios = []
-Formula = sp.lambdify(Variables, guardarFormula)
+
 
 def derivacionFormula(polinomio, variables):
     

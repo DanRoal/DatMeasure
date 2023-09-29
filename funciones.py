@@ -25,7 +25,7 @@ def derivacionFormula(polinomio, variables):
         listaDerivadas.append(derivada)
         listaDerivadasNumerica.append(numericDeriv)
 
-def obtenerFormula(formula,variables, deltas, trigger = bool):
+def obtenerFormula(formula,variables, deltas, trigger: bool):
     global guardarFormula 
     guardarFormula = formula
     global Variables 
@@ -136,15 +136,15 @@ def nuevasVentanasDatos(trigg):
 
 
     ventana_nueva1 = tk.Toplevel()
-    ventana_nueva1.title("Introduce tus valores medidos")
+    ventana_nueva1.title(f"Introduce tus valores medidos para la variable {Variables[contador_ventanas-1]}")
     ventana_nueva1.geometry("500x300")
     entrada_datos = tk.Entry(ventana_nueva1)
     entrada_datos.grid(row=2)
 
-    if contador_ventanas > len(Variables):
-        obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg)
+    if contador_ventanas >= len(Variables):
+        trigg = True
     
-    boton_nueva_ventana = tk.Button(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1))
+    boton_nueva_ventana = tk.Button(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg))
     boton_nueva_ventana.grid(row=3)
     boton_cancelar = tk.Button(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
     boton_cancelar.grid(row=4)
@@ -152,13 +152,14 @@ def nuevasVentanasDatos(trigg):
 def obtenerDatos(entrada, ventana, encendido):
     
         
-    if contador_ventanas > len(Variables) & encendido==True:
+    if encendido==True:
+        listaDatosExperimentales.append(entrada.split())
         ventana.destroy()
         print([incertidumbre_absoluta(promedios), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
         
     else:
         listaDatosExperimentales.append(entrada.split())
         ventana.destroy()
-        nuevasVentanasDatos()
+        nuevasVentanasDatos(encendido)
 
 ###########################################################

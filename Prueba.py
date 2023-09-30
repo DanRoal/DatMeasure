@@ -1,27 +1,32 @@
 import tkinter as tk
-from tkinter import filedialog
-import pandas as pd
+from tkinter import ttk
+import funciones as fun
 
-def cargar_archivo():
-    ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV", filetypes=[("Archivos CSV", "*.csv")])
-    
-    if ruta_archivo:
-        try:
-            df = pd.read_csv(ruta_archivo)
-            # Puedes imprimir el DataFrame o hacer cualquier otra operación con él.
-            print("DataFrame cargado exitosamente:\n", df)
-        except Exception as e:
-            print(f"Error al cargar el archivo: {e}")
-    else:
-        print("No se seleccionó ningún archivo.")
-
-# Crear la ventana principal
 root = tk.Tk()
-root.title("Cargar archivo CSV")
+root.title("DatMeasure")
+root.geometry("500x300")
 
-# Crear un botón para cargar el archivo
-boton_cargar = tk.Button(root, text="Cargar archivo CSV", command=cargar_archivo)
-boton_cargar.pack(pady=20)
+style = ttk.Style()
+style.theme_use("clam")  # Puedes probar con "clam", "alt", "default", etc.
+style.configure(".", font=("Arial", 12))
+style.configure("TButton", padding=6, relief="flat", background="#4285F4", foreground="white")
+style.map("TButton", background=[("active", "#0d47a1")])
 
-# Iniciar el bucle de la interfaz gráfica
+style.configure("TEntry", padding=6, relief="flat", background="#f2f2f2", foreground="#333333")
+
+formula = ttk.Entry(root)
+formula.place(x=150, y=100)
+
+variables = ttk.Entry(root)
+variables.place(x=150, y=120)
+
+delta_x = ttk.Entry(root)
+delta_x.place(x=300, y=120)
+
+desviacionDatos = ttk.Button(root, text="Desviacion entre datos", command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas=delta_x.get(), trigger=False))
+desviacionResultados = ttk.Button(root, text="Desviacion entre resultados")
+
+desviacionDatos.place(x=10, y=150)
+desviacionResultados.place(x=10, y=170)
+
 root.mainloop()

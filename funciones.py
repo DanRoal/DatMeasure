@@ -180,8 +180,8 @@ def cargar_archivo():
             # Puedes imprimir el DataFrame o hacer cualquier otra operación con él.
             print("DataFrame cargado exitosamente:\n", df)
         except Exception as e:
-            print(f"Error al cargar el archivo: {e}")
+            messagebox.showerror(f"Error al cargar el archivo: {e}")
     else:
-        print("No se seleccionó ningún archivo.")
+        messagebox.showwarning("No se seleccionó ningún archivo.")
 
 ###########################################################

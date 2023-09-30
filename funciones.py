@@ -42,9 +42,9 @@ def obtenerFormula(formula,variables, deltas, trigger: bool):
     derivacionFormula(guardarFormula, Variables)
     nuevasVentanasDatos(trigger)
 
- #   La derivación ya está guardada en dos listas, una como expresión algebraica y otra como función numérica
-  #  La lista que contiene las expresiones algebraicas la usaremos después para mostrala al usuario en formato LaTex
-  #  Mientras que la de funciones numéricas las usaremos para meterle los valores que nos de el usuario
+#   La derivación ya está guardada en dos listas, una como expresión algebraica y otra como función numérica
+#   La lista que contiene las expresiones algebraicas la usaremos después para mostrala al usuario en formato LaTex
+#   Mientras que la de funciones numéricas las usaremos para meterle los valores que nos de el usuario
 
     print(listaDerivadas)
 

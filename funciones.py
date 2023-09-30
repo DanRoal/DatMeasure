@@ -1,7 +1,9 @@
 import sympy as sp
 import numpy as np
 import tkinter as tk
+from tkinter import filedialog
 import math
+import pandas as pd
 from tkinter import messagebox
 
 # Definimos funciones con las que vamos a trabajar
@@ -10,6 +12,7 @@ from tkinter import messagebox
 listaDerivadas = []
 listaDerivadasNumerica = []
 listaDatosExperimentales = []
+global contador_ventanas
 contador_ventanas = 0
 promedios = []
 
@@ -32,6 +35,9 @@ def obtenerFormula(formula,variables, deltas, trigger: bool):
     Variables = variables.split()
     global lista_apariencia
     lista_apariencia = deltas.split()
+
+    global contador_ventanas
+    contador_ventanas = 0
 
     derivacionFormula(guardarFormula, Variables)
     nuevasVentanasDatos(trigger)
@@ -131,7 +137,7 @@ class SecondaryWindow:
 ##################### Funciones de interfaz##################
 
 def nuevasVentanasDatos(trigg):
-    global contador_ventanas 
+    global contador_ventanas
     contador_ventanas += 1
 
 
@@ -140,6 +146,9 @@ def nuevasVentanasDatos(trigg):
     ventana_nueva1.geometry("500x300")
     entrada_datos = tk.Entry(ventana_nueva1)
     entrada_datos.grid(row=2)
+
+    boton_cargar = tk.Button(ventana_nueva1, text="Cargar archivo CSV", command=cargar_archivo)
+    boton_cargar.grid(row=6)
 
     if contador_ventanas >= len(Variables):
         trigg = True
@@ -161,5 +170,18 @@ def obtenerDatos(entrada, ventana, encendido):
         listaDatosExperimentales.append(entrada.split())
         ventana.destroy()
         nuevasVentanasDatos(encendido)
+
+def cargar_archivo():
+    ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV", filetypes=[("Archivos CSV", "*.csv")])
+    
+    if ruta_archivo:
+        try:
+            df = pd.read_csv(ruta_archivo)
+            # Puedes imprimir el DataFrame o hacer cualquier otra operación con él.
+            print("DataFrame cargado exitosamente:\n", df)
+        except Exception as e:
+            print(f"Error al cargar el archivo: {e}")
+    else:
+        print("No se seleccionó ningún archivo.")
 
 ###########################################################

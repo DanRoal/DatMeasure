@@ -21,6 +21,8 @@ def derivacionFormula(polinomio, variables):
     
     listaDerivadas.clear()
     listaDerivadasNumerica.clear()
+    listaDatosExperimentales.clear()
+    promedios.clear()
 
     for var in variables:
         derivada = sp.diff(polinomio, var)

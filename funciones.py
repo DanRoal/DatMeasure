@@ -76,8 +76,7 @@ def incertidumbre_f():
 
 def incertidumbre_estadistica(lista):
     sumandos = []
-    arr_standar = np.std(np.float_(listaDatosExperimentales), axis=1, ddof=1)
-    lista_standar = list(arr_standar)
+    lista_standar = [np.std(np.float_(i), ddof=1) for i in listaDatosExperimentales]
 
     for i in range(len(listaDerivadasNumerica)):
         multiplicados = (abs(listaDerivadasNumerica[i](*lista))) * lista_standar[i]

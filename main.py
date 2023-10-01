@@ -10,7 +10,12 @@ import funciones as fun
 
 root = tk.Tk()             # creamos una ventana
 root.title("DatMeasure")        # Nombre de la aplicación
-root.geometry("500x300")        # Tamaño de la ventana
+
+##  Dimensiones ##
+
+PX=root.winfo_screenwidth()/2-433.5
+PY=root.winfo_screenheight()/2-350
+root.geometry('867x650+%d+%d'%(PX,PY))        # Tamaño de la ventana centrada
 
 
 formula = tk.Entry()       # Le pedimos al usuario la formula a derivar

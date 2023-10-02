@@ -171,8 +171,7 @@ def obtenerDatos(entrada, ventana, encendido):
     if encendido==True:
         listaDatosExperimentales.append(entrada.split())
         ventana.destroy()
-        print([incertidumbre_absoluta(promedios), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
-        
+        mostrar_resultados()
     else:
         listaDatosExperimentales.append(entrada.split())
         ventana.destroy()
@@ -196,7 +195,8 @@ def cargar_archivo(ventana, encendido):
                 listaDatosExperimentales.append(primera_columna_lista)
 
                 ventana.destroy()
-                print([incertidumbre_absoluta(promedios), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
+                mostrar_resultados()
+                
             else:
                 f = pd.read_csv(ruta_archivo)
                 # Hacemos un data frame y lo ponemos en la variabel local df
@@ -213,5 +213,9 @@ def cargar_archivo(ventana, encendido):
             messagebox.showerror(f"Error al cargar el archivo: {e}")
     else:
         messagebox.showwarning("No se seleccionó ningún archivo.")
+
+
+def mostrar_resultados():
+    print([incertidumbre_absoluta(promedios), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
 
 ###########################################################

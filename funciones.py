@@ -16,6 +16,9 @@ global contador_ventanas
 contador_ventanas = 0
 promedios = []
 
+global data_frame
+data_frame = None
+
 
 def derivacionFormula(polinomio, variables):
     
@@ -148,16 +151,19 @@ def nuevasVentanasDatos(trigg):
     entrada_datos = tk.Entry(ventana_nueva1)
     entrada_datos.grid(row=2)
 
-    boton_cargar = tk.Button(ventana_nueva1, text="Cargar archivo CSV", command=cargar_archivo)
-    boton_cargar.grid(row=6)
 
     if contador_ventanas >= len(Variables):
         trigg = True
     
     boton_nueva_ventana = tk.Button(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg))
     boton_nueva_ventana.grid(row=3)
+
     boton_cancelar = tk.Button(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
     boton_cancelar.grid(row=4)
+
+    boton_cargar = tk.Button(ventana_nueva1, text="Cargar archivo CSV", command=lambda: cargar_archivo(ventana_nueva1, trigg))
+    boton_cargar.grid(row=6)
+    
 
 def obtenerDatos(entrada, ventana, encendido):
     
@@ -172,14 +178,37 @@ def obtenerDatos(entrada, ventana, encendido):
         ventana.destroy()
         nuevasVentanasDatos(encendido)
 
-def cargar_archivo():
+##Función para poder cargar archivos con los datos para cada una de las variables
+
+def cargar_archivo(ventana, encendido):
     ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV", filetypes=[("Archivos CSV", "*.csv")])
     
     if ruta_archivo:
         try:
-            df = pd.read_csv(ruta_archivo)
-            # Puedes imprimir el DataFrame o hacer cualquier otra operación con él.
-            print("DataFrame cargado exitosamente:\n", df)
+            if encendido:
+                df = pd.read_csv(ruta_archivo)
+                # Hacemos un data frame y lo ponemos en la variabel local df
+                print("DataFrame cargado exitosamente:\n")
+                #Vamos a escoger solamente los valores de la primera columna y convertirlo en una lista
+                primera_columna_lista = df.iloc[:, 0].tolist()
+
+                #Lo metemos en la lista de datos experimentales
+                listaDatosExperimentales.append(primera_columna_lista)
+
+                ventana.destroy()
+                print([incertidumbre_absoluta(promedios), incertidumbre_estadistica(promedios), incertidumbre_nominal(promedios)])
+            else:
+                f = pd.read_csv(ruta_archivo)
+                # Hacemos un data frame y lo ponemos en la variabel local df
+                print("DataFrame cargado exitosamente:\n")
+                #Vamos a escoger solamente los valores de la primera columna y convertirlo en una lista
+                primera_columna_lista = df.iloc[:, 0].tolist()
+
+                #Lo metemos en la lista de datos experimentales
+                listaDatosExperimentales.append(primera_columna_lista)
+                ventana.destroy()
+                nuevasVentanasDatos(encendido)
+            
         except Exception as e:
             messagebox.showerror(f"Error al cargar el archivo: {e}")
     else:

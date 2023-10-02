@@ -3,75 +3,56 @@
 from tkinter import*
 from tkinter import ttk
 import funciones as fun
+import customtkinter as ctk
 
 ###########Declaración de variables##############
 
 #################################################
 
-root = Tk()             # creamos una ventana
+root = ctk.CTk()             # creamos una ventana
 root.title("DatMeasure")        # Nombre de la aplicación
 
 ##  Dimensiones ##
 
 PX=root.winfo_screenwidth()/2-433.5
 PY=root.winfo_screenheight()/2-350
-root.geometry('867x650+%d+%d'%(PX,PY))        # Tamaño de la ventana centrada
+root.geometry('700x650+%d+%d'%(PX,PY))        # Tamaño de la ventana centrada
+root.minsize(480,600)
 
-style = ttk.Style(root)
+##Creamos un frame
 
-# Nombramos nuestros propios colores, código HEX:
-cfondo='#E5ECFF'
-cbotones='#2E68FF'
-cbotonessele='#0048FF'
-cmbotones='#CAD9FF'
-cmbotonessele='#A5BEFF'
-cscrolls='#B7CBFF'
-cscrollssele='#8AAAFF'
-cletras='#5A5B5F'
-cletrasgraf='#5A5B5F'
+frame = ctk.CTkFrame(root, fg_color="#bd7737")
+frame.grid(column=0, row = 0, sticky='nsew',padx=50, pady =50)
+frame.columnconfigure(0, weight=1)
 
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
 
-###Creamos estilo 
-style.theme_create('Estilo', settings={
-    # Los botones:
-    "TButton": {
-        "configure": {
-            "background": cbotones,
-            "focuscolor": "background",
-            "foreground": 'white',
-            "highlightthickness": 1,
-            "font":('Helvetica',12),
-            "anchor":"center",
-            "padding": [5,2]
-        },
-        "map": {
-            "background": [('pressed','!focus', 
-                cbotonessele),('active',cbotonessele)], 
-            "relief": [('pressed','groove'),('!pressed',
-                'ridge')],
-            "foreground": [('disabled','white'),('pressed',
-                'white'),('active','white')],
-        }
-    }
-})
-style.theme_use("Estilo")  # Puedes probar con "clam", "alt", "default", etc.
+logo = PhotoImage(file='images/logo.png')
+ctk.CTkLabel(frame, image = logo, text="").grid(columnspan=2, row=0)
+
+formula = ctk.CTkEntry(frame, placeholder_text= 'Expresion a derivar', fg_color= '#010101',width =220,height=40,
+    justify= CENTER)               # Le pedimos al usuario la formula a derivar
+formula.grid(columnspan=2, row=1,padx=4, pady =4)
+
+variables = ctk.CTkEntry(frame, placeholder_text= 'Variables', fg_color= '#010101',width =220,height=40,
+    justify= CENTER)               # Le pedimos al usuario las variables a derivar
+variables.grid(columnspan=2, row=2,padx=4, pady =4)
+
+deltas = ctk.CTkEntry(frame, placeholder_text= 'Deltas asociadas', fg_color= '#010101',width =220,height=40,
+    justify= CENTER)                # Le pedimos al usuario la incertidumbre asociada a cada variable
+deltas.grid(columnspan=2, row=3,padx=4, pady =4)
 
 
-style.configure(".", font=("Arial", 12))
-style.configure("TEntry", padding=5, relief="raised")
 
-formula = ttk.Entry(root)       # Le pedimos al usuario la formula a derivar
-formula.place(x=150, y=80)
-variables = ttk.Entry(root)     # Le pedimos las variales respecto a las cuales derivar
-variables.place(x=150, y=120)
-delta_x = ttk.Entry(root)       #Le pedimos que ingrese la inertidumbre absoluta o aparente de las variables
-delta_x.place(x=300, y=120)
+desviacionDatos = ctk.CTkButton(root, text="Desviacion entre datos", 
+    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),
+     trigger=False))       # Hacemos un boton con el cual ejecutar las acciones que queramos
+desviacionResultados = ctk.CTkButton(root, text= "Desviacion entre resultados")
 
-desviacionDatos = ttk.Button(root, text="Desviacion entre datos", command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= delta_x.get(), trigger=False))       # Hacemos un boton con el cual ejecutar las acciones que queramos
-desviacionResultados = ttk.Button(root, text= "Desviacion entre resultados")
+desviacionDatos.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
+desviacionResultados.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
 
 
-desviacionDatos.place(x=10, y=150) 
-desviacionResultados.place(x=10,y=190)
 
 root.mainloop()                 # Corremos la aplicación

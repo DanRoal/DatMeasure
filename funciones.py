@@ -5,6 +5,7 @@ from tkinter import filedialog
 import math
 import pandas as pd
 from tkinter import messagebox
+import customtkinter as ctk
 
 # Definimos funciones con las que vamos a trabajar
 
@@ -145,23 +146,23 @@ def nuevasVentanasDatos(trigg):
     contador_ventanas += 1
 
 
-    ventana_nueva1 = tk.Toplevel()
+    ventana_nueva1 = ctk.CTkToplevel()
     ventana_nueva1.title(f"Introduce tus valores medidos para la variable {Variables[contador_ventanas-1]}")
     ventana_nueva1.geometry("500x300")
-    entrada_datos = tk.Entry(ventana_nueva1)
+    entrada_datos = ctk.CTkEntry(ventana_nueva1)
     entrada_datos.grid(row=2)
 
 
     if contador_ventanas >= len(Variables):
         trigg = True
     
-    boton_nueva_ventana = tk.Button(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg))
+    boton_nueva_ventana = ctk.CTkButton(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg))
     boton_nueva_ventana.grid(row=3)
 
-    boton_cancelar = tk.Button(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
+    boton_cancelar = ctk.CTkButton(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
     boton_cancelar.grid(row=4)
 
-    boton_cargar = tk.Button(ventana_nueva1, text="Cargar archivo CSV", command=lambda: cargar_archivo(ventana_nueva1, trigg))
+    boton_cargar = ctk.CTkButton(ventana_nueva1, text="Cargar archivo CSV", command=lambda: cargar_archivo(ventana_nueva1, trigg))
     boton_cargar.grid(row=6)
     
 
@@ -196,7 +197,7 @@ def cargar_archivo(ventana, encendido):
 
                 ventana.destroy()
                 mostrar_resultados()
-                
+
             else:
                 f = pd.read_csv(ruta_archivo)
                 # Hacemos un data frame y lo ponemos en la variabel local df

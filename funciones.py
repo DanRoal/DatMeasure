@@ -102,42 +102,6 @@ def incertidumbre_nominal(lista):
 
 #############################################################
 
-###################### Clases ###############################
-'''
-import tkinter as tk
-
-class SecondaryWindow:
-
-    alive = False
-
-    def __init__(self, master, name):
-        self.master = master
-        self.master.title("Ingresa los datos de la variable {name}")
-        self.label = tk.Label(self.master, text=f"oli caracoli")
-        self.label.pack()
-        if (contador_ventanas == len(Variables)):
-            self.button_close = ttk.Button(
-                self,
-                text="Terminar",
-                command=self.destroy
-            )
-        else:
-            self.button_close = ttk.Button(
-                self,
-                text="Siguiente variable",
-                command=self.destroy
-            )
-
-    # Create a list of window names
-    window_names = ["Window 1", "Window 2", "Window 3", "Window 4", "Window 5"]
-
-    # Create secondary windows with different names using a for loop
-    for name in window_names:
-        new_window = tk.Toplevel(root)
-        SecondaryWindow(new_window, name)
-'''
-#############################################################
-
 
 ##################### Funciones de interfaz##################
 
@@ -146,9 +110,9 @@ def nuevasVentanasDatos(trigg):
     contador_ventanas += 1
 
 
-    ventana_nueva1 = ctk.CTkToplevel()
+    ventana_nueva1 = ctk.CTkToplevel(takefocus=True)
     ventana_nueva1.title(f"Introduce tus valores medidos para la variable {Variables[contador_ventanas-1]}")
-    ventana_nueva1.geometry("500x300")
+    ventana_nueva1.geometry('500x300+%d+%d'%(ventana_nueva1.winfo_screenwidth()/2-433.5,ventana_nueva1.winfo_screenheight()/2-350))
     entrada_datos = ctk.CTkEntry(ventana_nueva1)
     entrada_datos.grid(row=2)
 
@@ -156,7 +120,8 @@ def nuevasVentanasDatos(trigg):
     if contador_ventanas >= len(Variables):
         trigg = True
     
-    boton_nueva_ventana = ctk.CTkButton(ventana_nueva1, text="Siguiente variable", command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg))
+    boton_nueva_ventana = ctk.CTkButton(ventana_nueva1, text="Siguiente variable", 
+        command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg))
     boton_nueva_ventana.grid(row=3)
 
     boton_cancelar = ctk.CTkButton(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)

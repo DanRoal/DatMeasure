@@ -1,37 +1,57 @@
-from numpy import *                               # 1.21.1
-from sympy import *                               # 1.8
-from tkinter import *                             # 8.6
-from tkinter import filedialog,ttk,messagebox
-import funciones as fun
+from customtkinter  import CTk, CTkFrame, CTkEntry, CTkLabel,CTkButton,CTkCheckBox
+from tkinter import PhotoImage
 
-import pandas as pd
-from tkinter import filedialog, messagebox
+root = CTk() 
+root.geometry("500x600+350+20")
+root.minsize(480,500)
+root.config(bg ='#010101')
+root.title("Iniciar Sesion")
 
+frame = CTkFrame(root, fg_color='#010101')
+frame.grid(column=0, row = 0, sticky='nsew',padx=50, pady =50)
 
-root = Tk()             # creamos una ventana
-root.title("DatMeasure")
+frame.columnconfigure([0,1], weight=1)
+frame.rowconfigure([0,1,2,3,4,5], weight=1)
 
-
-def cargar_archivo():
-    ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV", filetypes=[("Archivos CSV", "*.csv")])
-    
-    if ruta_archivo:
-        try:
-            df = pd.read_csv(ruta_archivo)
-            # Puedes imprimir el DataFrame o hacer cualquier otra operación con él.
-            print("DataFrame cargado exitosamente:\n", df, type(df))
-            primera_columna_lista = df.iloc[:, 0].tolist()
-            print(primera_columna_lista)
-        except Exception as e:
-            print(f"Error al cargar el archivo: {e}")
-    else:
-        messagebox.showwarning("No se seleccionó ningún archivo.")
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
 
 
-boton_cargar = Button(root, text="Cargar archivo CSV", command=cargar_archivo)
-boton_cargar.grid(row=6)
+logo = PhotoImage(file='images/logo.png') 
+img_google = PhotoImage(file='images/google.png')
+img_facebook = PhotoImage(file='images/facebook.png')
 
-##Convertimos a lista los datos de la primera columna del dataframe
+
+CTkLabel(frame, image = logo).grid(columnspan=2, row=0)
+
+correo = CTkEntry(frame, font = ('sans serif',12), placeholder_text= 'Correo electronico', 
+	border_color='#2cb67d', fg_color= '#010101',width =220,height=40)
+correo.grid(columnspan=2, row=1,padx=4, pady =4)
+
+contrasenna = CTkEntry(frame,show="*",font = ('sans serif',12), placeholder_text= 'Contraseña',
+ border_color='#2cb67d', fg_color= '#010101', width =220,height=40)
+contrasenna.grid(columnspan=2, row=2,padx=4, pady =4)
+
+checkbox = CTkCheckBox(frame, text="Recordarme",hover_color='#7f5af0', 
+	border_color='#2cb67d', fg_color='#2cb67d')
+checkbox.grid(columnspan=2, row=3,padx=4, pady =4)
+
+bt_iniciar = CTkButton(frame,font = ('sans serif',12), border_color='#2cb67d', fg_color='#010101',
+	hover_color='#2cb67d',corner_radius=12,border_width=2,
+    text='INICIAR SESIÓN')
+bt_iniciar.grid(columnspan=2, row=4,padx=4, pady =4)
+
+bt_google= CTkButton(frame,font = ('sans serif',12), border_color='#7f5af0', fg_color='#010101', 
+	hover_color='#16161a',corner_radius=12,border_width=2,
+    text=' Google Login ', image= img_google)
+bt_google.grid(column = 0, row=6, padx=4, pady =4)
+
+bt_facebook = CTkButton(frame,font = ('sans serif',12), border_color='#7f5af0', fg_color='#010101',
+	hover_color='#16161a',corner_radius=12,border_width=2,
+    text='Facebook  Login', image= img_facebook)
+bt_facebook.grid(column=1, row=6,padx=4, pady =4)
 
 
+
+root.call('wm', 'iconphoto', root._w, logo)
 root.mainloop()

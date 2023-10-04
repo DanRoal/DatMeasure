@@ -1,37 +1,20 @@
-from numpy import *                               # 1.21.1
-from sympy import *                               # 1.8
-from tkinter import *                             # 8.6
-from tkinter import filedialog,ttk,messagebox
-import funciones as fun
+import numpy as np
 
-import pandas as pd
-from tkinter import filedialog, messagebox
+listaDatosExperimentales = [[1,2,3,4,5,6],[1,2,3,4,5,6]]
 
-
-root = Tk()             # creamos una ventana
-root.title("DatMeasure")
-
-
-def cargar_archivo():
-    ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV", filetypes=[("Archivos CSV", "*.csv")])
+def evaluaciones_f():
+    lista_evaluar=[]
     
-    if ruta_archivo:
-        try:
-            df = pd.read_csv(ruta_archivo)
-            # Puedes imprimir el DataFrame o hacer cualquier otra operación con él.
-            print("DataFrame cargado exitosamente:\n", df, type(df))
-            primera_columna_lista = df.iloc[:, 0].tolist()
-            print(primera_columna_lista)
-        except Exception as e:
-            print(f"Error al cargar el archivo: {e}")
-    else:
-        messagebox.showwarning("No se seleccionó ningún archivo.")
+    for i in range(len(listaDatosExperimentales[0])):
+        listita=[]
+        for j in range(len(listaDatosExperimentales)):
+            listita.append(listaDatosExperimentales[j][i])
+        lista_evaluar.append(listita)
+    
+    return lista_evaluar
 
+print(evaluaciones_f())
 
-boton_cargar = Button(root, text="Cargar archivo CSV", command=cargar_archivo)
-boton_cargar.grid(row=6)
+print('L , Lds ,   l, y'.split())
 
-##Convertimos a lista los datos de la primera columna del dataframe
-
-
-root.mainloop()
+print(np.std([2], ddof=1))

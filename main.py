@@ -31,26 +31,32 @@ root.rowconfigure(0, weight=1)
 logo = PhotoImage(file='images/logo.png')
 ctk.CTkLabel(frame, image = logo, text="").grid(columnspan=2, row=0)
 
+### Le pedimos al usuario la formula a derivar
 formula = ctk.CTkEntry(frame, placeholder_text= 'Expresion a derivar', fg_color= '#010101',width =220,height=40,
-    justify= CENTER)               # Le pedimos al usuario la formula a derivar
+    justify= CENTER)              
 formula.grid(columnspan=2, row=1,padx=4, pady =4)
 
+
+# Le pedimos al usuario las variables a derivar
 variables = ctk.CTkEntry(frame, placeholder_text= 'Variables', fg_color= '#010101',width =220,height=40,
-    justify= CENTER)               # Le pedimos al usuario las variables a derivar
+    justify= CENTER)               
 variables.grid(columnspan=2, row=2,padx=4, pady =4)
 
+
+ # Le pedimos al usuario la incertidumbre asociada a cada variable
 deltas = ctk.CTkEntry(frame, placeholder_text= 'Deltas asociadas', fg_color= '#010101',width =220,height=40,
-    justify= CENTER)                # Le pedimos al usuario la incertidumbre asociada a cada variable
+    justify= CENTER)               
 deltas.grid(columnspan=2, row=3,padx=4, pady =4)
 
 
-
+# Hacemos un boton con el cual ejecutar Desviación entre datos (monton de mediciones para un mismo dato)
 desviacionDatos = ctk.CTkButton(root, text="Desviacion entre datos", 
-    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),
-     trigger=False))       # Hacemos un boton con el cual ejecutar las acciones que queramos
-desviacionResultados = ctk.CTkButton(root, text= "Desviacion entre resultados")
-
+    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),trigger=False, datos=True))
 desviacionDatos.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
+
+       
+desviacionResultados = ctk.CTkButton(root, text= "Desviacion entre resultados", 
+    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),trigger=False, datos=False))
 desviacionResultados.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
 
 

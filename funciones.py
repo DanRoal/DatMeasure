@@ -146,28 +146,34 @@ def nuevasVentanasDatos(trigg, datos):
     ventana_nueva.title(f"Introduce tus valores medidos para la variable {Variables[contador_ventanas-1]}")
     ventana_nueva.geometry('500x300+%d+%d'%(ventana_nueva.winfo_screenwidth()/2-433.5,ventana_nueva.winfo_screenheight()/2-350))
     ventana_nueva.after(100, ventana_nueva.lift)
+    ventana_nueva.minsize(400,300)
+
+    frame = ctk.CTkFrame(ventana_nueva, fg_color="#bd7737")
+    frame.grid(column=0, row = 0, sticky='nsew',padx=50, pady =50)
+    frame.columnconfigure(0, weight=1)
 
     ventana_nueva.columnconfigure(0, weight=1)
     ventana_nueva.rowconfigure(0, weight=1)
 
 
-    entrada_datos = ctk.CTkEntry(ventana_nueva)
-    entrada_datos.grid(row=2)
+    entrada_datos = ctk.CTkEntry(frame, placeholder_text= 'Datos', fg_color= '#010101',
+        width =220,height=40) 
+    entrada_datos.grid(columnspan=2, row=1,padx=4, pady =4)
 
 
     if contador_ventanas >= len(Variables):
         trigg = True
     
-    boton_nueva_ventana = ctk.CTkButton(ventana_nueva, text="Siguiente variable", 
+    boton_nueva_ventana = ctk.CTkButton(frame, text="Siguiente variable", 
         command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva, trigg, datos))
     boton_nueva_ventana.grid(row=3)
 
-    boton_cancelar = ctk.CTkButton(ventana_nueva, text="Cancelar", command= ventana_nueva.destroy)
-    boton_cancelar.grid(row=4)
+    boton_cancelar = ctk.CTkButton(frame, text="Cancelar", command= ventana_nueva.destroy)
+    boton_cancelar.grid(columnspan=2, row=2,padx=4, pady =4)
 
-    boton_cargar = ctk.CTkButton(ventana_nueva, text="Cargar archivo CSV o Excel", 
+    boton_cargar = ctk.CTkButton(frame, text="Cargar archivo CSV o Excel", 
         command=lambda: cargar_archivo(ventana_nueva, trigg, datos))
-    boton_cargar.grid(row=5)
+    boton_cargar.grid(columnspan=2, row=3,padx=4, pady =4)
 
     
 

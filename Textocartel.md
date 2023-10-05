@@ -20,7 +20,7 @@ La app realiza cálculos automatizados de dos tipos de incertidumbres presentes 
 La desviación entre datos se calcula en los casos donde se toman varias mediciones de un mismo punto. Por ejemplo, al calcular la velocidad de un objeto tomando varias mediciones de distancia y tiempo de la sigiente forma:
 </p>
 
-![imagen]
+![imagen](images/datos.png)
 
 <p style="text-align: justify;">
  El primer paso consiste en obtener la desviación estándar para cada una de las variables usando su respectivo promedio. A continuación se calculan las incertidumbres nominal, estadística, y absoluta de la siguiente forma:
@@ -39,7 +39,7 @@ En donde $x_i$ representa cada una de las variables, $f$ es la función de la me
 Conocer la desviación entre resultados es útil, cuando los datos que se obtuvieron fueron del mismo fenómeno, pero no se tomaron con configuraciones iguales; es decir, usando el ejemplo anterior, la gráfica de datos obtenidos al calcular la velocidad de un objeto, debería de verse de la siguiente forma:
 </p>
 
-![imagen2]
+![imagen2](images/resultados.png)
 
 <p style="text-align: justify;">
 En este caso, la aplicación evalúa cada conjunto de datos dado para cada uno de los puntos en la ecuación provista. En términos del ejemplo, calcula la velocidad con los tres pares de datos obtenidos para la distancia y el tiempo. Enseguida, la aplicación calcula la desviación estandar del conjunto de evaluaciones y obtiene su incertidumbre estadística tal y como se describe en la ecuacion (1)
@@ -62,11 +62,11 @@ El lenguaje de programación que se utilizó para el desarrollo de la aplicació
 Usando la librería Pandas se extrae la información de los archivos provistos por el usuario, y se almacenan en listas. Con las librerías Numpy y Sympy se crearon las funciones que hacen los calculos matemáticos requerídos. Por último, se utilizó Tkinter y CustomTkinter para crear una interfaz intuitiva, simple de usar y visualmente atractiva.
 </p>
 
-![Imagen3]
+![Imagen3](images/principal.png)
 
 Después de llenar las casillas necesarias, se despliega una nueva ventana en la cual se pueden introducir los datos experimentales para cada variable.
 
-![imagen4]
+![imagen4](images/secundaria.png)
 
 Una vez cargados todos los datos, se obtienen los tres tipos de incertidumbre: la nominal, estadística y absoluta.
 

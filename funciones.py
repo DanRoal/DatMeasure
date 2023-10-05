@@ -8,6 +8,7 @@ from tkinter import messagebox
 import customtkinter as ctk
 import random
 
+
 # Definimos funciones con las que vamos a trabajar
 
 ################ Funciones matemáticas ######################
@@ -141,26 +142,32 @@ def nuevasVentanasDatos(trigg, datos):
     contador_ventanas += 1
 
 
-    ventana_nueva1 = ctk.CTkToplevel(takefocus=True)
-    ventana_nueva1.title(f"Introduce tus valores medidos para la variable {Variables[contador_ventanas-1]}")
-    ventana_nueva1.geometry('500x300+%d+%d'%(ventana_nueva1.winfo_screenwidth()/2-433.5,ventana_nueva1.winfo_screenheight()/2-350))
+    ventana_nueva = ctk.CTkToplevel(takefocus=True)
+    ventana_nueva.title(f"Introduce tus valores medidos para la variable {Variables[contador_ventanas-1]}")
+    ventana_nueva.geometry('500x300+%d+%d'%(ventana_nueva.winfo_screenwidth()/2-433.5,ventana_nueva.winfo_screenheight()/2-350))
+    ventana_nueva.after(100, ventana_nueva.lift)
 
-    entrada_datos = ctk.CTkEntry(ventana_nueva1)
+    ventana_nueva.columnconfigure(0, weight=1)
+    ventana_nueva.rowconfigure(0, weight=1)
+
+
+    entrada_datos = ctk.CTkEntry(ventana_nueva)
     entrada_datos.grid(row=2)
 
 
     if contador_ventanas >= len(Variables):
         trigg = True
     
-    boton_nueva_ventana = ctk.CTkButton(ventana_nueva1, text="Siguiente variable", 
-        command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva1, trigg, datos))
+    boton_nueva_ventana = ctk.CTkButton(ventana_nueva, text="Siguiente variable", 
+        command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva, trigg, datos))
     boton_nueva_ventana.grid(row=3)
 
-    boton_cancelar = ctk.CTkButton(ventana_nueva1, text="Cancelar", command= ventana_nueva1.destroy)
+    boton_cancelar = ctk.CTkButton(ventana_nueva, text="Cancelar", command= ventana_nueva.destroy)
     boton_cancelar.grid(row=4)
 
-    boton_cargar = ctk.CTkButton(ventana_nueva1, text="Cargar archivo CSV", command=lambda: cargar_archivo(ventana_nueva1, trigg, datos))
-    boton_cargar.grid(row=6)
+    boton_cargar = ctk.CTkButton(ventana_nueva, text="Cargar archivo CSV o Excel", 
+        command=lambda: cargar_archivo(ventana_nueva, trigg, datos))
+    boton_cargar.grid(row=5)
 
     
 
@@ -182,11 +189,15 @@ def obtenerDatos(entrada, ventana, encendido, datos):
 ##Función para poder cargar archivos con los datos para cada una de las variables
 
 def cargar_archivo(ventana, encendido, datos):
-    ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV", filetypes=[("Archivos CSV", "*.csv")])
+    ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV o XLSX", 
+        filetypes=[("Archivos CSV o Excel",("*.csv", "*.xlsx"))])
     
     if ruta_archivo:
         try:
-            df = pd.read_csv(ruta_archivo)
+            if ruta_archivo.endswith('.csv'):
+                df = pd.read_csv(ruta_archivo)
+            elif ruta_archivo.endswith('.xlsx'):
+                df = pd.read_excel(ruta_archivo)
             # Hacemos un data frame y lo ponemos en la variabel local df
             print("DataFrame cargado exitosamente:\n")
             #Vamos a escoger solamente los valores de la primera columna y convertirlo en una lista

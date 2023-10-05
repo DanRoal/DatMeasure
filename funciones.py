@@ -41,9 +41,9 @@ def obtenerFormula(formula,variables, deltas, trigger: bool, datos:bool):
     global guardarFormula 
     guardarFormula = formula
     global Variables 
-    Variables = variables.split()
+    Variables = [letra.lstrip().rstrip() for letra in variables.split(',')]
     global lista_apariencia
-    lista_apariencia = deltas.split()
+    lista_apariencia = [letra.lstrip().rstrip() for letra in deltas.split(',')]
 
     global contador_ventanas
     contador_ventanas = 0
@@ -168,14 +168,14 @@ def obtenerDatos(entrada, ventana, encendido, datos):
     
         
     if encendido:
-        listaDatosExperimentales.append(entrada.split())
+        listaDatosExperimentales.append([letra.lstrip().rstrip() for letra in entrada.split(',')])
         ventana.destroy()
         if datos:
             desv_datos()
         else:
             desv_resultados()
     else:
-        listaDatosExperimentales.append(entrada.split())
+        listaDatosExperimentales.append([letra.lstrip().rstrip() for letra in entrada.split(',')])
         ventana.destroy()
         nuevasVentanasDatos(encendido)
 

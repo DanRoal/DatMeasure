@@ -14,7 +14,7 @@ def evaluaciones_f():
     return lista_evaluar
 
 print(evaluaciones_f())
+cadena = "x  "
+variables = [letra.lstrip().rstrip() for letra in cadena.split(',')]
 
-print('L , Lds ,   l, y'.split())
-
-print(np.std([2], ddof=1))
+print(variables)

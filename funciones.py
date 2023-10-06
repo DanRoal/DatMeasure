@@ -1,12 +1,12 @@
 import sympy as sp
 import numpy as np
-import tkinter as tk
 from tkinter import filedialog
 import math
 import pandas as pd
-from tkinter import messagebox
 import customtkinter as ctk
 import random
+from CTkMessagebox import CTkMessagebox as messagebox
+import pyperclip as clipboard
 
 
 # Definimos funciones con las que vamos a trabajar
@@ -66,13 +66,6 @@ def suma_cuadratura(Lista_de_sumandos):
     resultado = math.sqrt(suma)
     return resultado
 
-def incertidumbre_absoluta_datos(lista_prom):
-
-    for i in range(len(listaDatosExperimentales)):
-        promedios.append(funcion_promedios(list(np.float_(listaDatosExperimentales[i]) )))
-
-    return math.sqrt(incertidumbre_estadistica_datos(lista_prom)**2+incertidumbre_nominal(lista_prom)**2)
-
 def funcion_promedios(datos):
     suma_datos = 0
     for i in datos:
@@ -105,12 +98,6 @@ def incert_nominal_resultados(lista):
         nominales.append(incertidumbre_nominal(lista[i]))
     return random.choice(nominales)
 
-def incert_absoluta_resultados():
-    l = [incert_estadistica_resultados(evaluaciones_f()), incert_nominal_resultados(evaluaciones_f())]
-    return suma_cuadratura(l)
-    
-    
-    
 
 def incertidumbre_estadistica_datos(lista):
     sumandos = []
@@ -200,6 +187,7 @@ def cargar_archivo(ventana, encendido, datos):
     
     if ruta_archivo:
         try:
+            df = 0
             if ruta_archivo.endswith('.csv'):
                 df = pd.read_csv(ruta_archivo)
             elif ruta_archivo.endswith('.xlsx'):
@@ -223,14 +211,32 @@ def cargar_archivo(ventana, encendido, datos):
                 nuevasVentanasDatos(encendido, datos)
             
         except Exception as e:
-            messagebox.showerror(message=f"Error al cargar el archivo: {e}")
+            messagebox(title="Algo malio sal",message=f"Error al cargar el archivo: {e}", icon = 'cancel')
     else:
-        messagebox.showwarning("No se seleccionó ningún archivo.")
+        messagebox(title="Cuidado!",message="No se seleccionó ningún archivo.", icon='warning')
 
 
 def desv_datos():
-    print([incertidumbre_absoluta_datos(promedios), incertidumbre_estadistica_datos(promedios), incertidumbre_nominal(promedios)])
 
+    for i in range(len(listaDatosExperimentales)):
+        promedios.append(funcion_promedios(list(np.float_(listaDatosExperimentales[i]) )))
+
+    estadistica = incertidumbre_estadistica_datos(promedios)
+    nominal = incertidumbre_nominal(promedios)
+    absoluta = suma_cuadratura([estadistica, nominal])
+
+    ms = messagebox(title="Incertidumbres", 
+               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}", 
+               icon='info',
+               option_1="Guardar resultados",
+               option_2="Copiar al portapapeles",
+               option_3="Salir")
+    if ms.get() == "Guardar resultados":
+        guardar_resultados(estadistica, nominal, absoluta)
+    elif ms.get() == "Copiar al portapapeles":
+        copiar_resultados(estadistica, nominal, absoluta)
+    else:
+        pass
 def desv_resultados():
 
     eval_resultados = evaluaciones_f()
@@ -239,8 +245,29 @@ def desv_resultados():
     nominal = incert_nominal_resultados(eval_resultados[1])
     absoluta = suma_cuadratura([estadistica, nominal])
     
-    print({'estadistica':estadistica,
-        'Nominal': nominal,
-        'Absoluta': absoluta})
+    ms = messagebox(title="Incertidumbres",
+               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}", 
+               icon='info',
+               option_1="Guardar resultados",
+               option_2="Copiar al portapapeles",
+               option_3="Salir")
+    if ms.get() == "Guardar resultados":
+        guardar_resultados(estadistica, nominal, absoluta)
+    elif ms.get() == "Copiar al portapapeles":
+        copiar_resultados(estadistica, nominal, absoluta)
+    else:
+        pass
+
+def copiar_resultados(estadistica, nominal, absoluta):
+    clipboard.copy(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}")
+    pass
+
+def guardar_resultados(estadistica, nominal, absoluta):
+    ruta = filedialog.asksaveasfilename(title="Guardar resultados", 
+                                        filetypes=[("Archivo de texto", "*.txt")], 
+                                        initialdir="C:/",
+                                        initialfile="incertidumbres.txt")
+    open(ruta, 'w').write(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}")
+    pass
 
 ###########################################################

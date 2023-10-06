@@ -230,7 +230,10 @@ def desv_datos():
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",
-               option_3="Salir")
+               option_3="Salir",
+               width=600,
+               height=300,
+               font=("Arial", 20))
     if ms.get() == "Guardar resultados":
         guardar_resultados(estadistica, nominal, absoluta)
     elif ms.get() == "Copiar al portapapeles":
@@ -250,7 +253,10 @@ def desv_resultados():
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",
-               option_3="Salir")
+               option_3="Salir",
+               width=600,
+               height=300,
+               font=("Arial", 20))
     if ms.get() == "Guardar resultados":
         guardar_resultados(estadistica, nominal, absoluta)
     elif ms.get() == "Copiar al portapapeles":

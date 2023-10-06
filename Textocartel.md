@@ -3,7 +3,7 @@
 ## ¿Qué es DatMeasure?
 
 <p style="text-align: justify;">
-Es una aplicación de código abierto auxiliar en las tareas relacionadas con el cálculo estadístico de las incertidumbres.
+Es una aplicación de código abierto, auxiliar en las tareas relacionadas con el cálculo estadístico de las incertidumbres.
 </p>
 
 ## ¿Para qué sirve?
@@ -17,7 +17,7 @@ Puede realizar cálculos para mediciones directas o indirectas.
 La app realiza cálculos automatizados de dos tipos de incertidumbres presentes en la experimentación: desviación entre datos y desviación entre resultados.
 </p>
 <p style="text-align: justify;">
-La desviación entre datos se calcula en los casos donde se toman varias mediciones de un mismo punto. Por ejemplo, al calcular la velocidad de un objeto tomando varias mediciones de distancia y tiempo de la sigiente forma:
+La desviación entre datos se calcula en los casos donde se toman varias mediciones de un mismo punto. Por ejemplo, al calcular la velocidad de un objeto tomando varias mediciones de distancia y tiempo de la siguiente forma:
 </p>
 
 ![imagen](images/datos.png)
@@ -33,7 +33,7 @@ $$
 \end{align}
 $$
 
-En donde $x_i$ representa cada una de las variables, $f$ es la función de la medición indirecta, $S_{x_i}$ la desdviación estandar de la variable $x_i$, y $\Delta x_i$ la incertidumbre de apreciación asociada a la variable $x_i$
+En donde $x_i$ representa cada una de las variables, $f$ es la función de la medición indirecta, $S_{x_i}$ la desviación estándar de la variable $x_i$, y $\Delta x_i$ la incertidumbre de apreciación asociada a la variable $x_i$
 
 <p style="text-align: justify;">
 Conocer la desviación entre resultados es útil, cuando los datos que se obtuvieron fueron del mismo fenómeno, pero no se tomaron con configuraciones iguales; es decir, usando el ejemplo anterior, la gráfica de datos obtenidos al calcular la velocidad de un objeto, debería de verse de la siguiente forma:
@@ -42,7 +42,7 @@ Conocer la desviación entre resultados es útil, cuando los datos que se obtuvi
 ![imagen2](images/resultados.png)
 
 <p style="text-align: justify;">
-En este caso, la aplicación evalúa cada conjunto de datos dado para cada uno de los puntos en la ecuación provista. En términos del ejemplo, calcula la velocidad con los tres pares de datos obtenidos para la distancia y el tiempo. Enseguida, la aplicación calcula la desviación estandar del conjunto de evaluaciones y obtiene su incertidumbre estadística tal y como se describe en la ecuacion (1)
+En este caso, la aplicación evalúa cada conjunto de datos dado para cada uno de los puntos en la ecuación provista. En términos del ejemplo, calcula la velocidad con los diez pares de datos obtenidos para la distancia y el tiempo. Enseguida, la aplicación calcula la desviación estándar del conjunto de evaluaciones y obtiene su incertidumbre estadística tal y como se describe en la ecuación (1)
 </p>
 <p style="text-align: justify;">
 En ambos casos, para calcular la incertidumbre absoluta, se suma en cuadratura la incertidumbre nominal y estadística:
@@ -59,7 +59,7 @@ $$
 El lenguaje de programación que se utilizó para el desarrollo de la aplicación fue Python.
 
 <p style="text-align: justify;">
-Usando la librería Pandas se extrae la información de los archivos provistos por el usuario, y se almacenan en listas. Con las librerías Numpy y Sympy se crearon las funciones que hacen los calculos matemáticos requerídos. Por último, se utilizó Tkinter y CustomTkinter para crear una interfaz intuitiva, simple de usar y visualmente atractiva.
+Usando la librería Pandas se extrae la información de los archivos provistos por el usuario, y se almacenan en listas. Con las librerías Numpy y Sympy se crearon las funciones que hacen los cálculos matemáticos requeridos. Por último, se utilizó Tkinter y Custom Tkinter para crear una interfaz intuitiva, simple de usar y visualmente atractiva.
 </p>
 
 ![Imagen3](images/principal.png)
@@ -80,5 +80,14 @@ DatMeasure acepta como datos de entrada texto plano o tablas de datos en formato
 </p>
 
 <p style="text-align: justify;">
-En el campo de la física calcular las incertidumbres tiene un papel de vital importancia, porque los resultados de cualquier experimento solo tendrán validez si también se reportan correctamente esas incertidumbres. Tener una aplicación que permita obtenerlas de manera sencilla y rápida, sirve para mantener el rigor científico que requiere la ciencia experimental.
+En el campo de la física calcular las incertidumbres tiene un papel de vital importancia, porque los resultados de cualquier experimento sólo tendrán validez si también se reportan correctamente esas incertidumbres. Tener una aplicación que permita obtenerlas de manera sencilla y rápida, sirve para mantener el rigor científico que requiere la ciencia experimental.
 </p>
+
+## Referencias
+
+1. Working Group 1 of the Joint
+Committee for Guides in Metrology (2008). *Evaluation of measurement data – Guide to the expression of uncertainty in measurements*, JCGM 100:2008, 1a edición
+
+2. Barrios, E. & Hernández, A. (2021). *Incertidumbres y análisis gráfico de mediciones.* [Manuscrito]. Universidad Nacional Autónoma de México
+
+3. Gutiérrez, C. (1998). *Introducción a la metodología experimental.* (2da ed.). Limusa.

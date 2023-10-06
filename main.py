@@ -55,13 +55,13 @@ formula.grid(columnspan=2, row=1,padx=4, pady =4)
 
 
 # Le pedimos al usuario las variables a derivar
-variables = ctk.CTkEntry(frame, placeholder_text= 'Variables', fg_color= '#010101',width =220,height=40,
+variables = ctk.CTkEntry(frame, placeholder_text= 'Variables (separador: ",")', fg_color= '#010101',width =220,height=40,
     justify= CENTER)               
 variables.grid(columnspan=2, row=2,padx=4, pady =4)
 
 
  # Le pedimos al usuario la incertidumbre asociada a cada variable
-deltas = ctk.CTkEntry(frame, placeholder_text= 'Deltas asociadas', fg_color= '#010101',width =220,height=40,
+deltas = ctk.CTkEntry(frame, placeholder_text= 'Deltas asociadas (separador: ",")', fg_color= '#010101',width =220,height=40,
     justify= CENTER)               
 deltas.grid(columnspan=2, row=3,padx=4, pady =4)
 

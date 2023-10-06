@@ -143,7 +143,7 @@ def nuevasVentanasDatos(trigg, datos):
     ventana_nueva.rowconfigure(0, weight=1)
 
 
-    entrada_datos = ctk.CTkEntry(frame, placeholder_text= 'Datos', fg_color= '#010101',
+    entrada_datos = ctk.CTkEntry(frame, placeholder_text= 'Datos (separador: ",")', fg_color= '#010101',
         width =220,height=40) 
     entrada_datos.grid(columnspan=2, row=1,padx=4, pady =4)
 

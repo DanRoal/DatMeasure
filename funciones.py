@@ -226,7 +226,7 @@ def desv_datos():
     absoluta = suma_cuadratura([estadistica, nominal])
 
     ms = messagebox(title="Incertidumbres", 
-               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}", 
+               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}", 
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",
@@ -249,7 +249,7 @@ def desv_resultados():
     absoluta = suma_cuadratura([estadistica, nominal])
     
     ms = messagebox(title="Incertidumbres",
-               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}", 
+               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles:{listaDerivadas}", 
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",
@@ -265,7 +265,7 @@ def desv_resultados():
         pass
 
 def copiar_resultados(estadistica, nominal, absoluta):
-    clipboard.copy(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}")
+    clipboard.copy(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}")
     pass
 
 def guardar_resultados(estadistica, nominal, absoluta):
@@ -273,7 +273,7 @@ def guardar_resultados(estadistica, nominal, absoluta):
                                         filetypes=[("Archivo de texto", "*.txt")], 
                                         initialdir="C:/",
                                         initialfile="incertidumbres.txt")
-    open(ruta, 'w').write(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}")
+    open(ruta, 'w').write(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}")
     pass
 
 ###########################################################

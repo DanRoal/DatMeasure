@@ -45,7 +45,6 @@ def obtenerFormula(formula,variables, deltas, trigger: bool, datos:bool):
     Variables = [letra.lstrip().rstrip() for letra in variables.split(',')]
     global lista_apariencia
     lista_apariencia = [letra.lstrip().rstrip() for letra in deltas.split(',')]
-
     global contador_ventanas
     contador_ventanas = 0
 
@@ -153,14 +152,14 @@ def nuevasVentanasDatos(trigg, datos):
     
     boton_nueva_ventana = ctk.CTkButton(frame, text="Siguiente variable", 
         command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva, trigg, datos))
-    boton_nueva_ventana.grid(row=3)
+    boton_nueva_ventana.grid(row=2)
 
     boton_cancelar = ctk.CTkButton(frame, text="Cancelar", command= ventana_nueva.destroy)
-    boton_cancelar.grid(columnspan=2, row=2,padx=4, pady =4)
+    boton_cancelar.grid(columnspan=2, row=3,padx=4, pady =4)
 
     boton_cargar = ctk.CTkButton(frame, text="Cargar archivo CSV o Excel", 
         command=lambda: cargar_archivo(ventana_nueva, trigg, datos))
-    boton_cargar.grid(columnspan=2, row=3,padx=4, pady =4)
+    boton_cargar.grid(columnspan=2, row=4,padx=4, pady =4)
 
     
 

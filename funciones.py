@@ -24,6 +24,9 @@ eval_resultados=0
 global data_frame
 data_frame = None
 
+global datos
+datos = False
+
 
 def derivacionFormula(polinomio, variables):
     
@@ -38,7 +41,7 @@ def derivacionFormula(polinomio, variables):
         listaDerivadas.append(derivada)
         listaDerivadasNumerica.append(numericDeriv)
 
-def obtenerFormula(formula,variables, deltas, trigger: bool, datos:bool):
+def obtenerFormula(formula,variables, deltas, trigger: bool, data:bool):
     global guardarFormula 
     guardarFormula = formula
     global Variables 
@@ -48,13 +51,16 @@ def obtenerFormula(formula,variables, deltas, trigger: bool, datos:bool):
     global contador_ventanas
     contador_ventanas = 0
 
+    global datos
+    datos = data
+
     derivacionFormula(guardarFormula, Variables)
 
 #   La derivación ya está guardada en dos listas, una como expresión algebraica y otra como función numérica
 #   La lista que contiene las expresiones algebraicas la usaremos después para mostrala al usuario en formato LaTex
 #   Mientras que la de funciones numéricas las usaremos para meterle los valores que nos de el usuario
 
-    nuevasVentanasDatos(trigger,datos)
+    nuevasVentanasDatos(trigger)
 
     print(listaDerivadas)
 
@@ -95,7 +101,7 @@ def incert_nominal_resultados(lista):
     nominales=[]
     for i in range(len(lista)):
         nominales.append(incertidumbre_nominal(lista[i]))
-    return random.choice(nominales)
+    return nominales
 
 
 def incertidumbre_estadistica_datos(lista):
@@ -123,7 +129,7 @@ def incertidumbre_nominal(lista):
 
 ##################### Funciones de interfaz##################
 
-def nuevasVentanasDatos(trigg, datos):
+def nuevasVentanasDatos(trigg):
     global contador_ventanas
     contador_ventanas += 1
 
@@ -151,19 +157,19 @@ def nuevasVentanasDatos(trigg, datos):
         trigg = True
     
     boton_nueva_ventana = ctk.CTkButton(frame, text="Siguiente variable", 
-        command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva, trigg, datos))
-    boton_nueva_ventana.grid(row=2)
+        command= lambda: obtenerDatos(entrada_datos.get(), ventana_nueva, trigg))
+    boton_nueva_ventana.grid(columnspan=2, row=2,padx=4, pady =4)
 
     boton_cancelar = ctk.CTkButton(frame, text="Cancelar", command= ventana_nueva.destroy)
     boton_cancelar.grid(columnspan=2, row=3,padx=4, pady =4)
 
     boton_cargar = ctk.CTkButton(frame, text="Cargar archivo CSV o Excel", 
-        command=lambda: cargar_archivo(ventana_nueva, trigg, datos))
+        command=lambda: cargar_archivo(ventana_nueva, trigg))
     boton_cargar.grid(columnspan=2, row=4,padx=4, pady =4)
 
     
 
-def obtenerDatos(entrada, ventana, encendido, datos):
+def obtenerDatos(entrada, ventana, encendido):
     
         
     if encendido:
@@ -180,7 +186,7 @@ def obtenerDatos(entrada, ventana, encendido, datos):
 
 ##Función para poder cargar archivos con los datos para cada una de las variables
 
-def cargar_archivo(ventana, encendido, datos):
+def cargar_archivo(ventana, encendido):
     ruta_archivo = filedialog.askopenfilename(title="Seleccionar archivo CSV o XLSX", 
         filetypes=[("Archivos CSV o Excel",("*.csv", "*.xlsx"))])
     
@@ -207,7 +213,7 @@ def cargar_archivo(ventana, encendido, datos):
                 else:
                     desv_resultados()
             else:
-                nuevasVentanasDatos(encendido, datos)
+                nuevasVentanasDatos(encendido)
             
         except Exception as e:
             messagebox(title="Algo malio sal",message=f"Error al cargar el archivo: {e}", icon = 'cancel')
@@ -245,7 +251,7 @@ def desv_resultados():
 
     estadistica = incert_estadistica_resultados(eval_resultados[0])
     nominal = incert_nominal_resultados(eval_resultados[1])
-    absoluta = suma_cuadratura([estadistica, nominal])
+    absoluta = 1 #suma_cuadratura([estadistica, nominal])
     
     ms = messagebox(title="Incertidumbres",
                message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles:{listaDerivadas}", 

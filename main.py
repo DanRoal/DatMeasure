@@ -1,7 +1,6 @@
 ## En esta sección estaremos usando Tkinter para hacer una interfaz gráfica para nnuestro programa
 
 from tkinter import*
-from tkinter import ttk
 import funciones as fun
 import customtkinter as ctk
 
@@ -68,12 +67,12 @@ deltas.grid(columnspan=2, row=3,padx=4, pady =4)
 
 # Hacemos un boton con el cual ejecutar Desviación entre datos (monton de mediciones para un mismo dato)
 desviacionDatos = ctk.CTkButton(root, text="Desviacion entre datos", 
-    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),trigger=False, datos=True))
+    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),trigger=False, data=True))
 desviacionDatos.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
 
        
 desviacionResultados = ctk.CTkButton(root, text= "Desviacion entre resultados", 
-    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),trigger=False, datos=False))
+    command=lambda: fun.obtenerFormula(formula.get(), variables.get(), deltas= deltas.get(),trigger=False, data=False))
 desviacionResultados.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
 
 

@@ -85,12 +85,13 @@ def evaluaciones_f():
         listita=[]
         for j in range(len(listaDatosExperimentales)):
             listita.append(listaDatosExperimentales[j][i])
-        lista_evaluar.append(listita)
+        lista_evaluar.append(np.float_(listita))
     
     formulanum = sp.lambdify(Variables, guardarFormula)
 
     for i in range(len(lista_evaluar)):
-        evaluaciones.append(formulanum(*lista_evaluar[i]))
+
+        evaluaciones.append(formulanum(*np.float_(lista_evaluar[i])))
     
     return [evaluaciones, lista_evaluar]
 
@@ -251,7 +252,7 @@ def desv_resultados():
 
     estadistica = incert_estadistica_resultados(eval_resultados[0])
     nominal = incert_nominal_resultados(eval_resultados[1])
-    absoluta = 1 #suma_cuadratura([estadistica, nominal])
+    absoluta = suma_cuadratura([estadistica, nominal])
     
     ms = messagebox(title="Incertidumbres",
                message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles:{listaDerivadas}", 

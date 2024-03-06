@@ -102,7 +102,8 @@ def incert_nominal_resultados(lista):
     nominales=[]
     for i in range(len(lista)):
         nominales.append(incertidumbre_nominal(lista[i]))
-    return nominales
+    return {'puntos': nominales,
+            "single": random.choice(nominales)}
 
 
 def incertidumbre_estadistica_datos(lista):
@@ -232,7 +233,7 @@ def desv_datos():
     absoluta = suma_cuadratura([estadistica, nominal])
 
     ms = messagebox(title="Incertidumbres", 
-               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}", 
+               message=f"Estadistica: {estadistica}\nNominales: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}", 
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",
@@ -252,10 +253,10 @@ def desv_resultados():
 
     estadistica = incert_estadistica_resultados(eval_resultados[0])
     nominal = incert_nominal_resultados(eval_resultados[1])
-    absoluta = suma_cuadratura([estadistica, nominal])
+    absoluta = suma_cuadratura([estadistica, nominal.get('single')])
     
     ms = messagebox(title="Incertidumbres",
-               message=f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles:{listaDerivadas}", 
+               message=f"Estadistica: {estadistica}\nNominal: {nominal.get('puntos')}\nAbsoluta: {absoluta}\nLista de derivadas parciles:{listaDerivadas}", 
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",

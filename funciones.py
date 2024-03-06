@@ -218,28 +218,33 @@ def cargar_archivo(ventana, encendido):
                 nuevasVentanasDatos(encendido)
             
         except Exception as e:
-            messagebox(title="Algo malio sal",message=f"Error al cargar el archivo: {e}", icon = 'cancel')
+            messagebox(title="Algo malió sal",message=f"Error al cargar el archivo: {e}", icon = 'cancel')
     else:
         messagebox(title="Cuidado!",message="No se seleccionó ningún archivo.", icon='warning')
 
 
 def desv_datos():
 
-    for i in range(len(listaDatosExperimentales)):
-        promedios.append(funcion_promedios(list(np.float_(listaDatosExperimentales[i]) )))
+    for i in listaDatosExperimentales:
+        promedios.append(funcion_promedios(list(np.float_(i))))
 
     estadistica = incertidumbre_estadistica_datos(promedios)
     nominal = incertidumbre_nominal(promedios)
     absoluta = suma_cuadratura([estadistica, nominal])
 
+    #Obtenemos el resultado evaluando la fórmula provista con el promedio de los datos
+    resultado = sp.lambdify(Variables, guardarFormula)
+    resultado = resultado(*promedios)
+
+
     ms = messagebox(title="Incertidumbres", 
-               message=f"Estadistica: {estadistica}\nNominales: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}", 
+               message=f"Resultado: {resultado}\nEstadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}", 
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",
                option_3="Salir",
                width=600,
-               height=300,
+               height=350,
                font=("Arial", 20))
     if ms.get() == "Guardar resultados":
         guardar_resultados(estadistica, nominal, absoluta)
@@ -252,17 +257,22 @@ def desv_resultados():
     eval_resultados = evaluaciones_f()
 
     estadistica = incert_estadistica_resultados(eval_resultados[0])
-    nominal = incert_nominal_resultados(eval_resultados[1])
+    nominal = incert_nominal_resultados(eval_resultados[1])             #Regresa un diccionario con
+                                                                    #la lista de incertidumbres nominales "puntos"
+                                                                    #y un valor aleatorio de la lista "single"
     absoluta = suma_cuadratura([estadistica, nominal.get('single')])
+
+    #Obtenemos el resultado promedio de las evaluaciones
+    resultado = funcion_promedios(eval_resultados[0])
     
     ms = messagebox(title="Incertidumbres",
-               message=f"Estadistica: {estadistica}\nNominal: {nominal.get('puntos')}\nAbsoluta: {absoluta}\nLista de derivadas parciles:{listaDerivadas}", 
+               message=f"Resultado promedio: {resultado}\nEstadistica: {estadistica}\nNominales: {nominal.get('puntos')}\nAbsoluta: {absoluta}\nLista de derivadas parciles:{listaDerivadas}", 
                icon='info',
                option_1="Guardar resultados",
                option_2="Copiar al portapapeles",
                option_3="Salir",
                width=600,
-               height=300,
+               height=350,
                font=("Arial", 20))
     if ms.get() == "Guardar resultados":
         guardar_resultados(estadistica, nominal, absoluta)

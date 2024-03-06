@@ -275,22 +275,22 @@ def desv_resultados():
                height=350,
                font=("Arial", 20))
     if ms.get() == "Guardar resultados":
-        guardar_resultados(estadistica, nominal, absoluta)
+        guardar_resultados(resultado, estadistica, nominal, absoluta)
     elif ms.get() == "Copiar al portapapeles":
-        copiar_resultados(estadistica, nominal, absoluta)
+        copiar_resultados(resultado, estadistica, nominal, absoluta)
     else:
         pass
 
-def copiar_resultados(estadistica, nominal, absoluta):
-    clipboard.copy(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}")
+def copiar_resultados(resultado, estadistica, nominal, absoluta):
+    clipboard.copy(f"Resultado: {resultado}\nEstadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}")
     pass
 
-def guardar_resultados(estadistica, nominal, absoluta):
-    ruta = filedialog.asksaveasfilename(title="Guardar resultados", 
+def guardar_resultados(resultado, estadistica, nominal, absoluta):
+    ruta = filedialog.asksaveasfilename(title="Resultado e incertidumbres", 
                                         filetypes=[("Archivo de texto", "*.txt")], 
                                         initialdir="C:/",
                                         initialfile="incertidumbres.txt")
-    open(ruta, 'w').write(f"Estadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}")
+    open(ruta, 'w').write(f"Resultado: {resultado}\nEstadistica: {estadistica}\nNominal: {nominal}\nAbsoluta: {absoluta}\nLista de derivadas parciles: {listaDerivadas}")
     pass
 
 ###########################################################
